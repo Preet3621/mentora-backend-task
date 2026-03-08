@@ -77,6 +77,7 @@ All tokens and IDs are automatically passed between requests via pre/post script
 
 ## Project Structure
 
+```
 src/
 ├── config/
 │   └── db.js                  # MongoDB connection
@@ -105,6 +106,9 @@ src/
 ├── services/
 │   └── llmService.js          # Gemini API call logic
 └── index.js                   # app entry point
+```
+
+---
 
 ## API Overview
 
