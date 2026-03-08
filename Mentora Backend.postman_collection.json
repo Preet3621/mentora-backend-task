@@ -1,0 +1,1039 @@
+{
+	"info": {
+		"_postman_id": "83a77a28-ef84-45fa-9d00-2c4a45b7ba0e",
+		"name": "Mentora Backend",
+		"description": "Complete API collection for Mentora mentorship platform backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31252905"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Signup - Parent",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set('parent_email', 'rahul.sharma@gmail.com');",
+									"pm.environment.set('parent_password', 'rahul@1234');",
+									"console.log('Signing up parent:', pm.environment.get('parent_email'));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 201', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test('Token saved', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('token');",
+									"    pm.environment.set('parent_token', json.token);",
+									"    pm.environment.set('parent_id', json._id);",
+									"    console.log('Parent token saved');",
+									"});",
+									"pm.test('Role is parent', function () {",
+									"    pm.expect(pm.response.json().role).to.eql('parent');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Rahul Sharma\",\n  \"email\": \"{{parent_email}}\",\n  \"password\": \"{{parent_password}}\",\n  \"role\": \"parent\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Mentor",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set('mentor_email', 'priya.mentor@gmail.com');",
+									"pm.environment.set('mentor_password', 'priya@1234');",
+									"console.log('Signing up mentor:', pm.environment.get('mentor_email'));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 201', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test('Token saved', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('token');",
+									"    pm.environment.set('mentor_token', json.token);",
+									"    pm.environment.set('mentor_id', json._id);",
+									"    console.log('Mentor token saved');",
+									"});",
+									"pm.test('Role is mentor', function () {",
+									"    pm.expect(pm.response.json().role).to.eql('mentor');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Priya Verma\",\n  \"email\": \"{{mentor_email}}\",\n  \"password\": \"{{mentor_password}}\",\n  \"role\": \"mentor\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Parent",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"console.log('Logging in parent:', pm.environment.get('parent_email'));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Token refreshed', function () {",
+									"    var json = pm.response.json();",
+									"    pm.environment.set('parent_token', json.token);",
+									"    pm.environment.set('parent_id', json._id);",
+									"    console.log('Parent token refreshed');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{parent_email}}\",\n  \"password\": \"{{parent_password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Mentor",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"console.log('Logging in mentor:', pm.environment.get('mentor_email'));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Token refreshed', function () {",
+									"    var json = pm.response.json();",
+									"    pm.environment.set('mentor_token', json.token);",
+									"    pm.environment.set('mentor_id', json._id);",
+									"    console.log('Mentor token refreshed');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{mentor_email}}\",\n  \"password\": \"{{mentor_password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Me",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (!pm.environment.get('parent_token')) {",
+									"    console.warn('No parent_token. Run Login - Parent first.');",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Has user fields', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('_id');",
+									"    pm.expect(json).to.have.property('email');",
+									"    pm.expect(json).to.have.property('role');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Create Student",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (!pm.environment.get('parent_token')) {",
+									"    console.warn('parent_token missing. Run Login - Parent first.');",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 201', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test('Student ID saved', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('_id');",
+									"    pm.environment.set('student_id', json._id);",
+									"    console.log('Student ID saved:', json._id);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Aarav Sharma\",\n  \"age\": 12\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/students",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Students",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set('page', '1');",
+									"pm.environment.set('limit', '10');",
+									"console.log('Fetching students page:', pm.environment.get('page'), 'limit:', pm.environment.get('limit'));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Pagination fields present', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('data');",
+									"    pm.expect(json).to.have.property('page');",
+									"    pm.expect(json).to.have.property('limit');",
+									"    pm.expect(json).to.have.property('total');",
+									"    pm.expect(json).to.have.property('totalPages');",
+									"    pm.expect(json.data).to.be.an('array');",
+									"    console.log('Total students:', json.total, '| Pages:', json.totalPages);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/students?page={{page}}&limit={{limit}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"students"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{page}}"
+								},
+								{
+									"key": "limit",
+									"value": "{{limit}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lessons",
+			"item": [
+				{
+					"name": "Create Lesson",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (!pm.environment.get('mentor_token')) {",
+									"    console.warn('mentor_token missing. Run Login - Mentor first.');",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 201', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test('Lesson ID saved', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('_id');",
+									"    pm.environment.set('lesson_id', json._id);",
+									"    console.log('Lesson ID saved:', json._id);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{mentor_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Introduction to Python\",\n  \"description\": \"Learn the basics of Python programming language from scratch\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/lessons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"lessons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Lessons",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"console.log('Fetching lessons page 1 limit 10');"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Pagination fields present', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('data');",
+									"    pm.expect(json).to.have.property('page');",
+									"    pm.expect(json).to.have.property('limit');",
+									"    pm.expect(json).to.have.property('total');",
+									"    pm.expect(json).to.have.property('totalPages');",
+									"    pm.expect(json.data).to.be.an('array');",
+									"    console.log('Total lessons:', json.total, '| Pages:', json.totalPages);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/lessons?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"lessons"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lesson By ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (!pm.environment.get('lesson_id')) {",
+									"    console.warn('lesson_id not set. Run Create Lesson first.');",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Correct lesson returned', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json._id).to.eql(pm.environment.get('lesson_id'));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/lessons/{{lesson_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sessions By Lesson",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (!pm.environment.get('lesson_id')) {",
+									"    console.warn('lesson_id not set. Run Create Lesson first.');",
+									"}",
+									"console.log('Fetching sessions for lesson:', pm.environment.get('lesson_id'));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Pagination fields present', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('data');",
+									"    pm.expect(json).to.have.property('page');",
+									"    pm.expect(json).to.have.property('total');",
+									"    pm.expect(json).to.have.property('totalPages');",
+									"    console.log('Total sessions:', json.total);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/lessons/{{lesson_id}}/sessions?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"lessons",
+								"{{lesson_id}}",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Create Booking",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (!pm.environment.get('student_id')) {",
+									"    console.warn('student_id not set. Run Create Student first.');",
+									"}",
+									"if (!pm.environment.get('lesson_id')) {",
+									"    console.warn('lesson_id not set. Run Create Lesson first.');",
+									"}",
+									"console.log('Booking student:', pm.environment.get('student_id'), 'for lesson:', pm.environment.get('lesson_id'));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 201', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test('Booking ID saved', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('_id');",
+									"    pm.environment.set('booking_id', json._id);",
+									"    console.log('Booking ID saved:', json._id);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": \"{{student_id}}\",\n  \"lessonId\": \"{{lesson_id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bookings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Bookings",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"console.log('Fetching bookings page 1 limit 10');"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Pagination fields present', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('data');",
+									"    pm.expect(json).to.have.property('page');",
+									"    pm.expect(json).to.have.property('limit');",
+									"    pm.expect(json).to.have.property('total');",
+									"    pm.expect(json).to.have.property('totalPages');",
+									"    pm.expect(json.data).to.be.an('array');",
+									"    console.log('Total bookings:', json.total, '| Pages:', json.totalPages);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/bookings?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bookings"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sessions",
+			"item": [
+				{
+					"name": "Create Session",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (!pm.environment.get('lesson_id')) {",
+									"    console.warn('lesson_id not set. Run Create Lesson first.');",
+									"}",
+									"console.log('Creating session for lesson:', pm.environment.get('lesson_id'));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 201', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test('Session ID saved', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('_id');",
+									"    pm.environment.set('session_id', json._id);",
+									"    console.log('Session ID saved:', json._id);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{mentor_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"lessonId\": \"{{lesson_id}}\",\n  \"date\": \"2024-09-01T10:00:00Z\",\n  \"topic\": \"Variables and Data Types\",\n  \"summary\": \"Covered int, str, list and dict in Python\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sessions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Join Session",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (!pm.environment.get('session_id')) {",
+									"    console.warn('session_id not set. Run Create Session first.');",
+									"}",
+									"if (!pm.environment.get('student_id')) {",
+									"    console.warn('student_id not set. Run Create Student first.');",
+									"}",
+									"console.log('Student', pm.environment.get('student_id'), 'joining session', pm.environment.get('session_id'));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Joined successfully', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json.message).to.include('joined');",
+									"    console.log('Join response:', json.message);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentId\": \"{{student_id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/sessions/{{session_id}}/join",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sessions",
+								"{{session_id}}",
+								"join"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LLM",
+			"item": [
+				{
+					"name": "Summarize Text",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (!pm.environment.get('parent_token')) {",
+									"    console.warn('No token. Login first.');",
+									"}",
+									"console.log('Calling LLM summarize');"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test('Has summary and model', function () {",
+									"    var json = pm.response.json();",
+									"    pm.expect(json).to.have.property('summary');",
+									"    pm.expect(json).to.have.property('model');",
+									"    console.log('Model:', json.model);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{parent_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"Node.js is a cross-platform, open-source JavaScript runtime environment that can run on Windows, Linux, Unix, macOS, and more. Node.js runs on the V8 JavaScript engine, and executes JavaScript code outside a web browser. Node.js lets developers use JavaScript to write command line tools and for server-side scripting. The functionality of running scripts server-side produces dynamic web page content before the page is sent to the user web browser.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/llm/summarize",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"llm",
+								"summarize"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"console.log('Running request:', pm.info.requestName);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test('Response time is less than 3000ms', function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
