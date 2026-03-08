@@ -12,14 +12,17 @@ A simplified backend for a mentorship platform where parents, students, and ment
 ### Steps
 
 1. Clone the repository and install dependencies:
- # open the project in your selected IDE (ex. vs code) and open terminal in it and write below command.
+```bash
 npm install
+```
 
 2. .env file is already provided with temporarly gemini api key and mongo atlas connection 
   so that you can easily start the project.
 
-3. start the project by writing below command in terminal:
+3. Start the server:
+```bash
 npm run dev
+
 
 ## API Testing with Postman
 
